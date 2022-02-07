@@ -15,10 +15,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val myName: MyName = MyName("John Doe")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        binding.myName = myName // layout 파일 내의 myName이라는 variable에 myName 객체 참조값 전달
         binding.doneButton.setOnClickListener {
             addNickname(it)
         }
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun addNickname(view: View) {
 
         binding.apply {
-            nicknameText.text = binding.nicknameEdit.text
+            myName?.nickname = nicknameEdit.text.toString()
             invalidateAll() // UI를 새로운 데이터로 보여주기 위해서 모든 binding expression을 invalidate 시킴. 올바른 데이터로 재생성하기 위함.
             nicknameEdit.visibility = View.GONE
             doneButton.visibility = View.GONE
